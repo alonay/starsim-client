@@ -1,21 +1,25 @@
 import './index.css';
-import { createStore, } from 'redux';
+import 'semantic-ui-css/semantic.min.css';
+import { BrowserRouter as Router, Route } from 'react-router-dom';
 import { Provider, } from 'react-redux';
-import App from './App';
+import App from './components/App';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import registerServiceWorker from './registerServiceWorker';
-import authReducer from './reducers/auth';
+import store from './store/index.js';
 
-const store = createStore(
-  authReducer,
-  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
-);
+const Root = ({ store }) => {
+  return (
+    <Router>
+      <Provider store={store}>
+        <Route path="/" component={App}/>
+      </Provider>
+    </Router>
+  );
+};
 
 ReactDOM.render(
-  <Provider store={store}>
-    <App store={store}/>
-  </Provider>,
+  <Root store={store}/>,
   document.getElementById('root')
 );
 
