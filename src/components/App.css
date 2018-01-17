@@ -1,3 +1,5 @@
+
+
 .App {
   text-align: center;
 }
@@ -175,4 +177,12 @@ text-shadow: 0px 0px 3px #000, -1px -1px #000, 1px 1px #000
   left: 40%;
   color: white;
   text-shadow: 0px 0px 3px #000, -1px -1px #000, 1px 1px #000
+}
+
+
+
+.showrand{
+  color: white;
+  text-shadow: 0px 0px 3px #000, -1px -1px #000, 1px 1px #000
+
 }

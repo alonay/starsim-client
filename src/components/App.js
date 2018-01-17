@@ -5,6 +5,7 @@ import { Link, Route, Switch, } from 'react-router-dom';
 import * as actions from '../actions';
 import Profile from './Profile';
 import Welcome from './Welcome';
+import Simulator from "./Simulator"
 
 class App extends Component {
   render() {
@@ -43,6 +44,7 @@ class App extends Component {
         <Switch>
           <Route path="/welcome" component={Welcome} />
           <Route path="/profile" component={Profile} />
+          <Route path="/simulator" component={Simulator}/>
         </Switch>
       </div>
     );
