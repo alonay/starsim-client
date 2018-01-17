@@ -57,9 +57,20 @@ class Simulator extends React.Component {
         currentMouseDown: "",
         correct: this.state.correct + 1
       })
+
+    } else if (event.target.value !== this.state.currentRand.substring(0,event.target.value.length)){
+
+      debugger;
+      this.setState({
+
+        currentMouseDown:""
+
+
+        //person.name.substring(0,this.state.input.length).toLowerCase() ||  this.state.input.toLowerCase() === person.ig.substring(0,this.state.input.length).toLowerCase(
+      })
     } else {
       this.setState({
-        currentMouseDown: event.target.value
+        currentMouseDown:event.target.value
       })
     }
   }
@@ -84,10 +95,12 @@ class Simulator extends React.Component {
 
     return(
       <div>
+      <progress value="0" max="30" id="progressBar"></progress><br/>
       <input placeholder="Enter Hot Keys" onKeyDown={this.handleChange}></input>
-      <button onClick={this.handleRand}>randomize</button> {!this.state.timeUp && rand || this.state.timeUp && timeIsUpMessage}
+      <button>Add Key</button><br/>
+      <button onClick={this.handleRand}>Start</button> {!this.state.timeUp && rand || this.state.timeUp && timeIsUpMessage}
         <input value={this.state.currentMouseDown} onClick= {this.timeUp} onChange={this.handleUserMatchAttempt}></input>
-        <progress value="0" max="30" id="progressBar"></progress>
+
       </div>
     )
   }
