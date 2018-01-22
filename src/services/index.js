@@ -1,4 +1,4 @@
-const API_ROOT = `http://localhost:3001/api/v1`;
+const API_ROOT = `http://localhost:3000/api/v1`;
 
 const headers = {
   'Content-Type': 'application/json',
@@ -12,12 +12,12 @@ const getWithToken = url => {
   }).then(res => res.json());
 };
 
-const getCurrentUser = () => {
-  return getWithToken(`${API_ROOT}/current_user`);
+const getCurrentGamer = () => {
+  return getWithToken(`${API_ROOT}/current_gamer`);
 };
 
 const login = data => {
-  return fetch(`${API_ROOT}/login/`, {
+  return fetch(`${API_ROOT}/auth/`, {
     method: 'POST',
     headers,
     body: JSON.stringify(data)
@@ -27,6 +27,6 @@ const login = data => {
 export const adapter = {
   auth: {
     login,
-    getCurrentUser
+    getCurrentGamer
   }
 };

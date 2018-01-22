@@ -11,7 +11,7 @@ class Welcome extends React.Component {
       clicked: false,
       error: false,
       fields: {
-        username: '',
+        name: '',
         password: ''
       }
     };
@@ -31,12 +31,12 @@ class Welcome extends React.Component {
 
   handleSubmit = event => {
     event.preventDefault();
-    const { fields: { username, password } } = this.state;
-    debugger
-    this.props.loginUser(username, password, this.props.history);
+    const { fields: { name, password } } = this.state;
+    this.props.loginGamer(name, password, this.props.history);
   };
 
   render(){
+
     const { fields } = this.state;
     const intro =
       <div>
@@ -52,10 +52,10 @@ class Welcome extends React.Component {
         <div className="three wide field">
           <input
             type="text"
-            name="username"
+            name="name"
             onChange={this.handleChange}
-            placeholder="Username"
-            value={fields.username}
+            placeholder="Name"
+            value={fields.name}
           />
         </div>
         <div className="three wide field">
@@ -85,4 +85,9 @@ class Welcome extends React.Component {
   }
 }
 
-export default withRouter(connect(null, actions)(Welcome));
+const mapStateToProps = state => ({
+  currentGamer: state.auth.currentGamer,
+  loggedIn: !!state.auth.currentGamer.id
+});
+
+export default withRouter(connect(mapStateToProps, actions)(Welcome));

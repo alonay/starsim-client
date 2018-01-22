@@ -1,23 +1,25 @@
 import { adapter, } from '../services';
 
-export const fetchUser = () => dispatch => {
+export const fetchGamer = () => dispatch => {
   dispatch({ type: 'ASYNC_START' });
-  adapter.auth.getCurrentUser().then(user => {
-    dispatch({ type: 'SET_CURRENT_USER', user });
+  adapter.auth.getCurrentGamer().then(gamer => {
+    debugger;
+    dispatch({ type: 'SET_CURRENT_GAMER', gamer });
   });
 };
 
-export const loginUser = (username, password, history) => dispatch => {
+export const loginGamer = (name, password, history) => dispatch => {
   dispatch({ type: 'ASYNC_START' });
 
-  adapter.auth.login({ username, password }).then(user => {
-    localStorage.setItem('token', user.jwt);
-    dispatch({ type: 'SET_CURRENT_USER', user });
+  adapter.auth.login({ name, password }).then(gamer => {
+    localStorage.setItem('token', gamer.token);
+    debugger;
+    dispatch({ type: 'SET_CURRENT_GAMER', gamer });
     history.push('/profile');
   });
 };
 
-export const logoutUser = () => {
+export const logoutGamer = () => {
   localStorage.removeItem('token');
-  return { type: 'LOGOUT_USER' };
+  return { type: 'LOGOUT_GAMER' };
 };

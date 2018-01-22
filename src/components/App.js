@@ -9,6 +9,7 @@ import Simulator from "./Simulator"
 
 class App extends Component {
   render() {
+    console.log(this.props.currentGamer)
     return (
       <div>
         <div className="video-background">
@@ -28,7 +29,7 @@ class App extends Component {
               <a
                 onClick={e => {
                   e.preventDefault();
-                  this.props.logoutUser();
+                  this.props.logoutGamer();
                 }}
               >
                 Sign Out
@@ -40,9 +41,12 @@ class App extends Component {
           <li>
             <Link to="/profile">Go to Profile</Link>
           </li>
+          <li>
+            <Link to="/simulator">Go to Simulator</Link>
+          </li>
         </ul>
         <Switch>
-          <Route path="/welcome" component={Welcome} />
+          <Route path="/welcome" component={Welcome} currentGamer={this.props.currentGamer}/>
           <Route path="/profile" component={Profile} />
           <Route path="/simulator" component={Simulator}/>
         </Switch>
@@ -52,7 +56,8 @@ class App extends Component {
 }
 
 const mapStateToProps = state => ({
-  loggedIn: !!state.auth.currentUser.id
+  currentGamer: state.auth.currentGamer,
+  loggedIn: !!state.auth.currentGamer.id
 });
 
 export default connect(mapStateToProps, actions)(App);

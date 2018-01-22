@@ -13,9 +13,11 @@ class Simulator extends React.Component {
       currentRand:"",
       currentMouseDown:"",
       timeUp: false,
-      correct: 0
+      correct: 0,
+      gamers:[]
     }
   };
+
   handleClick= () =>{
     this.setState({
       clicked: !this.state.clicked
@@ -48,25 +50,17 @@ class Simulator extends React.Component {
     })
   }
 
-  handleUserMatchAttempt = (event) => {
+  handleGamerMatchAttempt = (event) => {
 
     if (this.state.currentRand === event.target.value ) {
-
       this.handleRand();
       this.setState({
         currentMouseDown: "",
         correct: this.state.correct + 1
       })
-
     } else if (event.target.value !== this.state.currentRand.substring(0,event.target.value.length)){
-
-      debugger;
       this.setState({
-
         currentMouseDown:""
-
-
-        //person.name.substring(0,this.state.input.length).toLowerCase() ||  this.state.input.toLowerCase() === person.ig.substring(0,this.state.input.length).toLowerCase(
       })
     } else {
       this.setState({
@@ -88,24 +82,50 @@ class Simulator extends React.Component {
     }, 1000);
   }
 
-  render(){
+  render() {
     console.log(this.state)
+    console.log(this.props.currentGamer)
     let rand = <h1 className= "showrand">{this.state.currentRand}</h1>
     let timeIsUpMessage = <h1 className= "showrand">Time is Up! You got {this.state.correct}</h1>
+    let start =
+    <div>
+      <div>
+        <input onKeyDown={this.handleChange} placeholder="Enter Hot Keys" type="text" />
+      </div>
+      <button onClick={(event) => { this.handleRand(); this.handleClick();}}>Start</button>
+      <button>Add Key</button><br/>
+    </div>
+
+    let timer = <progress
+      className="timer"
+      value="0"
+      max="30"
+      id="progressBar"
+      ></progress>
+
+    let matchInput = <div>
+      <input className = "matchAttempt"
+        value={this.state.currentMouseDown}
+        onChange={this.handleGamerMatchAttempt}
+        onClick= {this.timeUp} type="text"
+      />
+    </div>
 
     return(
-      <div>
-      <progress value="0" max="30" id="progressBar"></progress><br/>
-      <input placeholder="Enter Hot Keys" onKeyDown={this.handleChange}></input>
-      <button>Add Key</button><br/>
-      <button onClick={this.handleRand}>Start</button> {!this.state.timeUp && rand || this.state.timeUp && timeIsUpMessage}
-        <input value={this.state.currentMouseDown} onClick= {this.timeUp} onChange={this.handleUserMatchAttempt}></input>
 
+      <div>
+       {(!this.state.clicked && start) || (this.state.clicked && timer)}
+       {(!this.state.timeUp && rand) || (this.state.timeUp && timeIsUpMessage)}
+       {this.state.clicked && matchInput}
       </div>
     )
   }
 }
 
+const mapStateToProps = state => ({
+  currentGamer: state.auth.currentGamer,
+  loggedIn: !!state.auth.currentGamer.id
+});
 
 
-export default withRouter(connect(null, actions)(Simulator));
+export default withRouter(connect(mapStateToProps, actions)(Simulator));
