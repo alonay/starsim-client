@@ -29,7 +29,7 @@ class Profile extends React.Component {
 }
 
 
-// export default withAuth(Profile);
+//export default withAuth(Profile);
 
 const mapStateToProps = state => ({
   currentGamer: state.auth.currentGamer,

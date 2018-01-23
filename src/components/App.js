@@ -59,5 +59,13 @@ const mapStateToProps = state => ({
   currentGamer: state.auth.currentGamer,
   loggedIn: !!state.auth.currentGamer.id
 });
+// const mapDispatchToProps = () => {
+//   return bindActionCreators({
+//     highScore: this.state.highScore
+//   }, dispatch);
+// };
+
+// export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Simulator));
+
 
 export default connect(mapStateToProps, actions)(App);

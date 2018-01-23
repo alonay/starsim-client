@@ -1,7 +1,7 @@
 import React from "react"
 import { connect, } from 'react-redux';
 import { withRouter, } from 'react-router-dom';
-import * as actions from '../actions';
+import * as actions from '../actions/index.js';
 
 class Simulator extends React.Component {
   constructor(){
@@ -14,13 +14,15 @@ class Simulator extends React.Component {
       currentMouseDown:"",
       timeUp: false,
       correct: 0,
+      highScore: 0,
       gamers:[]
     }
   };
 
   handleClick= () =>{
     this.setState({
-      clicked: !this.state.clicked
+      clicked: !this.state.clicked,
+      highScore: this.props.currentGamer.profile.high_score
     })
   }
 
@@ -69,8 +71,17 @@ class Simulator extends React.Component {
     }
   }
 
+  newHighScore = () => {
+
+    if (this.state.correct > this.state.highScore){
+      this.setState({
+        highScore: this.props.currentGamer.high_score
+      })
+    }
+  }
+
   timeUp = () => {
-    var timeleft = 30;
+    var timeleft = 1;
     var downloadTimer = setInterval(() => {
       document.getElementById("progressBar").value = 30 - --timeleft;
       if (timeleft <= 0) {
@@ -78,15 +89,22 @@ class Simulator extends React.Component {
         this.setState({
           timeUp: true
         })
+        if (this.state.correct > this.state.highScore){
+          this.setState({
+            highScore: this.state.correct
+          })
+        }
       }
     }, 1000);
+    this.props.changeHighScore(this.state)
   }
 
   render() {
-    console.log(this.state)
-    console.log(this.props.currentGamer)
+    console.log("Gamer HS:", this.props.currentGamer.profile.high_score)
+    console.log("HS State", this.state.highScore)
+
     let rand = <h1 className= "showrand">{this.state.currentRand}</h1>
-    let timeIsUpMessage = <h1 className= "showrand">Time is Up! You got {this.state.correct}</h1>
+    let timeIsUpMessage = <h1 className= "showrand">Time is Up! You got {this.state.correct} your high score is {this.state.highScore}</h1>
     let start =
     <div>
       <div>
@@ -118,9 +136,11 @@ class Simulator extends React.Component {
        {(!this.state.timeUp && rand) || (this.state.timeUp && timeIsUpMessage)}
        {this.state.clicked && matchInput}
       </div>
+
     )
   }
 }
+
 
 const mapStateToProps = state => ({
   currentGamer: state.auth.currentGamer,

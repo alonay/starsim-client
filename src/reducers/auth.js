@@ -7,6 +7,8 @@ export default (state = initialState, action) => {
       return { ...state, currentGamer: { profile, id, name } };
     case 'LOGOUT_GAMER':
       return { ...state, currentGamer: {} };
+    case 'CHANGE_GAMER_SCORE':
+     return {...state, high_score: this.currentGamer.profile.high_score}
     default:
       return state;
   }
