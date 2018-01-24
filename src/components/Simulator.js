@@ -100,9 +100,18 @@ class Simulator extends React.Component {
 
   }
 
+  splitRand = () => {
+    let splitLetters = this.state.currentRand.split("")
+    return splitLetters.map((letter => {
+      return <span className="showrand">{letter}</span>
+    }))
+  }
+
   render() {
-    let rand = <h1 className="showrand">{this.state.currentRand}</h1>
-    let timeIsUpMessage = <h1 className="showrand">Time is Up! You got {this.state.correct} your high score is {this.state.highScore}</h1>
+    //let rand = <h1>{this.splitRand()}</h1>
+
+    //let rand = <h1 className="showrand">{this.splitRand()}</h1>
+    let timeIsUpMessage = <h1>Time is Up! You got {this.state.correct} your high score is {this.state.highScore}</h1>
     let start =
     <div>
       <div>
@@ -133,7 +142,7 @@ class Simulator extends React.Component {
     return(
       <div className="simulator-container">
         {(!this.state.clicked && start) || (this.state.clicked && timer)}
-        {(!this.state.timeUp && rand) || (this.state.timeUp && timeIsUpMessage)}
+        {(!this.state.timeUp && this.splitRand()) || (this.state.timeUp && timeIsUpMessage)}
         {(this.state.clicked && !this.state.timeUp) && matchInput}
       </div>
     )
