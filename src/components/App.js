@@ -46,7 +46,7 @@ class App extends Component {
           </li>
         </ul>
         <Switch>
-          <Route path="/welcome" component={Welcome} currentGamer={this.props.currentGamer}/>
+          <Route path="/welcome" component={Welcome} />
           <Route path="/profile" component={Profile} />
           <Route path="/simulator" component={Simulator}/>
         </Switch>

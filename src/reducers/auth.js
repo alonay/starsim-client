@@ -8,7 +8,9 @@ export default (state = initialState, action) => {
     case 'LOGOUT_GAMER':
       return { ...state, currentGamer: {} };
     case 'CHANGE_GAMER_SCORE':
-     return {...state, high_score: this.currentGamer.profile.high_score}
+      const updatedCurrentGamer = Object.assign({}, state.currentGamer)
+      updatedCurrentGamer.profile.high_score = action.payload.high_score
+      return {...state, currentGamer: updatedCurrentGamer }
     default:
       return state;
   }

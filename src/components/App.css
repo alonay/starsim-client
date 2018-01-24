@@ -1,22 +1,33 @@
 
-.timer{
-   margin-left:auto;
-}
 .App {
   text-align: center;
 }
-
-.App-logo {
-  animation: App-logo-spin infinite 20s linear;
-  height: 80px;
-}
-
-.App-header {
-  background-color: #222;
-  height: 150px;
-  padding: 20px;
+.showrand{
+  position: absolute;
+  background:blue;
+  margin: auto;
   color: white;
+  text-shadow: 0px 0px 3px #000, -1px -1px #000, 1px 1px #000
+  /*background-color: #000;
+border-top: 2px outset #d0d0d0;
+border-left: 2px outset #d0d0d0;
+border-right: 2px outset #a9a9a9;
+border-bottom: 2px outset #a9a9a9;
+color: #32cd32;
+font-size:175%;
+text-align: center;
+margin: 0 -0.2em 0 0;
+padding: 0.1em;
+width: 1.1em;*/
 }
+.timer{
+  top:5%;
+  position:absolute;
+  width: 50%;
+  height: 90px;
+}
+
+
 
 .App-title {
   font-size: 1.5em;
@@ -77,14 +88,6 @@
   -o-transition: opacity 4s ease-in-out;
 }
 
-.show {
-    opacity: 1;
-    transition: opacity 1s ease-in-out;
-    -webkit-transition: opacity 1s ease-in-out;
-    -moz-transition: opacity 1s ease-in-out;
-    -ms-transition: opacity 1s ease-in-out;
-    -o-transition: opacity 1s ease-in-out;
-}
 .choose-keys{
   position: absolute;
   top: 60%;
@@ -101,6 +104,11 @@
   font-size: 25px;
   border-radius: 15px;
   text-shadow: 0px 0px 3px #000, -1px -1px #000, 1px 1px #000
+}
+
+.simulator-container {
+  margin: auto;
+  width: 50%;
 }
 
 .start {
@@ -172,18 +180,14 @@ font-weight: 500;
 line-height: 2.2px;
 text-shadow: 0px 0px 3px #000, -1px -1px #000, 1px 1px #000
 }
-
+.match{
+  top: 90.5%;
+  left: 40%;
+}
 
 .sign-in-form {
   top: 50.5%;
   left: 40%;
-  color: white;
-  text-shadow: 0px 0px 3px #000, -1px -1px #000, 1px 1px #000
-}
-
-
-
-.showrand{
   color: white;
   text-shadow: 0px 0px 3px #000, -1px -1px #000, 1px 1px #000
 }

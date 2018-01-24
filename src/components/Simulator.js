@@ -81,30 +81,27 @@ class Simulator extends React.Component {
   }
 
   timeUp = () => {
-    var timeleft = 1;
+    var timeleft = 30;
     var downloadTimer = setInterval(() => {
       document.getElementById("progressBar").value = 30 - --timeleft;
       if (timeleft <= 0) {
         clearInterval(downloadTimer);
+
         this.setState({
           timeUp: true
         })
-        if (this.state.correct > this.state.highScore){
+        if (this.state.correct > this.state.highScore) {
           this.setState({
             highScore: this.state.correct
-          })
+          }, ()=> this.props.changeHighScore(this.state))
         }
       }
     }, 1000);
-    this.props.changeHighScore(this.state)
   }
 
   render() {
-    console.log("Gamer HS:", this.props.currentGamer.profile.high_score)
-    console.log("HS State", this.state.highScore)
-
-    let rand = <h1 className= "showrand">{this.state.currentRand}</h1>
-    let timeIsUpMessage = <h1 className= "showrand">Time is Up! You got {this.state.correct} your high score is {this.state.highScore}</h1>
+    let rand = <h1 className="showrand">{this.state.currentRand}</h1>
+    let timeIsUpMessage = <h1 className="showrand">Time is Up! You got {this.state.correct} your high score is {this.state.highScore}</h1>
     let start =
     <div>
       <div>
@@ -114,33 +111,33 @@ class Simulator extends React.Component {
       <button>Add Key</button><br/>
     </div>
 
-    let timer = <progress
+    let timer = <div><progress
       className="timer"
       value="0"
       max="30"
       id="progressBar"
-      ></progress>
+    >
+    </progress>
+    </div>
 
-    let matchInput = <div>
-      <input className = "matchAttempt"
+    let matchInput = <div className="match">
+      <input
         value={this.state.currentMouseDown}
         onChange={this.handleGamerMatchAttempt}
-        onClick= {this.timeUp} type="text"
+        onClick={this.timeUp}
+        type="text"
       />
     </div>
 
     return(
-
-      <div>
-       {(!this.state.clicked && start) || (this.state.clicked && timer)}
-       {(!this.state.timeUp && rand) || (this.state.timeUp && timeIsUpMessage)}
-       {this.state.clicked && matchInput}
+      <div className="simulator-container">
+        {(!this.state.clicked && start) || (this.state.clicked && timer)}
+        {(!this.state.timeUp && rand) || (this.state.timeUp && timeIsUpMessage)}
+        {(this.state.clicked && !this.state.timeUp) && matchInput}
       </div>
-
     )
   }
 }
-
 
 const mapStateToProps = state => ({
   currentGamer: state.auth.currentGamer,

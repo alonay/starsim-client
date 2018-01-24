@@ -19,11 +19,13 @@ class Profile extends React.Component {
   }
 
   render(){
-
-
+    const { currentGamer, } = this.props
+    const highScore = currentGamer.profile && currentGamer.profile.high_score
 
     return(
-      <h1>Hi {this.props.currentGamer.name} your ranking is{this.props.currentGamer.profile.high_score}</h1>
+      <h1>
+        Hi {currentGamer.name} your ranking is {highScore}
+      </h1>
     )
   }
 }

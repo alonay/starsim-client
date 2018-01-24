@@ -12,7 +12,6 @@ export const loginGamer = (name, password, history) => dispatch => {
 
   adapter.auth.login({ name, password }).then(gamer => {
     localStorage.setItem('token', gamer.token);
-    debugger;
     dispatch({ type: 'SET_CURRENT_GAMER', gamer });
     history.push('/profile');
   });
@@ -25,7 +24,6 @@ export const logoutGamer = () => {
 
 
 export function changeHighScore(state) {
-  console.log("in action", state)
   return (dispatch) => {
     return fetch(`http://localhost:3000/profiles/1`, {
       method: 'PATCH',
@@ -39,10 +37,8 @@ export function changeHighScore(state) {
       })
     })
     .then(data => data.json())
-    .then(data=>console.log("this is data: ",data))
-    // .then(data=> {
-    //   dispatch({type: "CHANGE_GAMER_SCORE", payload: data})
-    //   return data.Property.id
-    // })
+    .then(data=> {
+      dispatch({type: "CHANGE_GAMER_SCORE", payload: data})
+    })
   }
 }
