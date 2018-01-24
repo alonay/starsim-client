@@ -97,6 +97,7 @@ class Simulator extends React.Component {
         }
       }
     }, 1000);
+
   }
 
   render() {
