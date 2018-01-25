@@ -8,6 +8,11 @@ import Welcome from './Welcome';
 import Simulator from "./Simulator"
 
 class App extends Component {
+  componentDidMount(){
+    if (localStorage.getItem('token')){
+      this.props.fetchGamer()
+    }
+  }
   render() {
     console.log(this.props.currentGamer)
     return (

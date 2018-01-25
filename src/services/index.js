@@ -24,9 +24,18 @@ const login = data => {
   }).then(res => res.json());
 };
 
+const signUp= data => {
+  return fetch(`${API_ROOT}/signUp/`, {
+    method: 'POST',
+    headers,
+    body: JSON.stringify(data)
+  }).then(res => res.json());
+};
+
+
 export const adapter = {
   auth: {
-    login,
+    login, signUp,
     getCurrentGamer
   }
 };

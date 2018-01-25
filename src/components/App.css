@@ -4,26 +4,27 @@
 }
  .showrand{
   margin-left: 10px;
-
   color: white;
   text-shadow: 0px 0px 3px #000, -1px -1px #000, 1px 1px #000;
-background-color: #000;
-border-top: 7px outset #d0d0d0;
-border-left: 5px outset #d0d0d0;
-border-right: 5px outset #a9a9a9;
-border-bottom: 5px outset #a9a9a9;
-color: #32cd32;
-font-size:200%;
-text-align: center;
-margin: 90;
-padding: 1em;
-width: 2.1em;
+  background-color: #000;
+  border-top: 7px outset #d0d0d0;
+  border-left: 7px outset #d0d0d0;
+  border-right: 7px outset #a9a9a9;
+  border-bottom: 7px outset #a9a9a9;
+  color: #white;
+  font-size:160%;
+  text-align: center;
+  margin: 90;
+  padding: 1em;
+  width: 2.1em;
+
 }
 .timer{
   top:5%;
   position:absolute;
   width: 50%;
   height: 90px;
+  color: white;
 }
 
 

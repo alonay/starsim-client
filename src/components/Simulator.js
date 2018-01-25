@@ -15,7 +15,8 @@ class Simulator extends React.Component {
       timeUp: false,
       correct: 0,
       highScore: 0,
-      gamers:[]
+      gamers:[],
+      averageComboTimes: []
     }
   };
 
@@ -60,6 +61,11 @@ class Simulator extends React.Component {
         currentMouseDown: "",
         correct: this.state.correct + 1
       })
+      var t0 = performance.now();
+      this.handleRand();
+      var t1 = performance.now();
+      console.log("This combo took "+ (t1 - t0) + " milliseconds.");
+
     } else if (event.target.value !== this.state.currentRand.substring(0,event.target.value.length)){
       this.setState({
         currentMouseDown:""
@@ -112,6 +118,7 @@ class Simulator extends React.Component {
 
     //let rand = <h1 className="showrand">{this.splitRand()}</h1>
     let timeIsUpMessage = <h1>Time is Up! You got {this.state.correct} your high score is {this.state.highScore}</h1>
+    let newHighScoreMessage = <h1>New High Score! You got {this.state.correct} your high score is {this.state.highScore}</h1>
     let start =
     <div>
       <div>

@@ -22,6 +22,17 @@ export const logoutGamer = () => {
   return { type: 'LOGOUT_GAMER' };
 };
 
+export const signUpGamer = (name, password, history) => dispatch => {
+  dispatch({ type: 'ASYNC_START' });
+
+  adapter.auth.signUp({ name, password }).then(gamer => {
+    localStorage.setItem('token', gamer.token);
+    dispatch({ type: 'SET_CURRENT_GAMER', gamer });
+    history.push('/profile');
+  });
+};
+
+
 
 export function changeHighScore(state) {
   return (dispatch) => {
