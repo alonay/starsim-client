@@ -2,7 +2,23 @@
 .App {
   text-align: center;
 }
+.time-is-up-message{
+  background-color: transparent; /* Green */
+  border: white;
+  color: white;
+  border: 2px solid white;
+  padding: 10px 10px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 25px;
+  border-radius: 15px;
+  text-shadow: 0px 0px 3px #000, -1px -1px #000, 1px 1px #000
+}
  .showrand{
+   position:relative;
+  left: 10%;
+  top: 50%;
   margin-left: 10px;
   color: white;
   text-shadow: 0px 0px 3px #000, -1px -1px #000, 1px 1px #000;
@@ -12,7 +28,8 @@
   border-right: 7px outset #a9a9a9;
   border-bottom: 7px outset #a9a9a9;
   color: #white;
-  font-size:160%;
+  font-size:200%;
+  width: 300px;
   text-align: center;
   margin: 90;
   padding: 1em;
@@ -20,7 +37,7 @@
 
 }
 .timer{
-  top:5%;
+  top:80%;
   position:absolute;
   width: 50%;
   height: 90px;
@@ -129,6 +146,23 @@
   text-shadow: 0px 0px 3px #000, -1px -1px #000, 1px 1px #000
 }
 
+.start-sim{
+  position: absolute;
+  left: 40%;
+
+  background-color: transparent; /* Green */
+  border: white;
+  color: white;
+  border: 2px solid white;
+  padding: 10px 10px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 50px;
+  border-radius: 15px;
+  text-shadow: 0px 0px 3px #000, -1px -1px #000, 1px 1px #000
+}
+
 .nevermind {
   color: none;
   background-color: transparent; /* Green */
@@ -181,8 +215,15 @@ line-height: 2.2px;
 text-shadow: 0px 0px 3px #000, -1px -1px #000, 1px 1px #000
 }
 .match{
-  top: 90.5%;
-  left: 40%;
+  position: absolute;
+  top: 70.5%;
+  left: 25%;
+  border-radius: 15px;
+  color: white;
+  font-size: 50px;
+  border-radius: 100px;
+  text-shadow: 0px 0px 3px #000, -1px -1px #000, 1px 1px #000;
+  background: transparent;
 }
 
 .sign-in-form {
@@ -190,4 +231,26 @@ text-shadow: 0px 0px 3px #000, -1px -1px #000, 1px 1px #000
   left: 40%;
   color: white;
   text-shadow: 0px 0px 3px #000, -1px -1px #000, 1px 1px #000
+}
+
+.enter-hot-keys{
+  top: 50.5%;
+  left: 50%;
+  border-radius: 15px;
+  color: white;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 50px;
+  border-radius: 15px;
+  text-shadow: 0px 0px 3px #000, -1px -1px #000, 1px 1px #000;
+  background: transparent;
+}
+
+.profile{
+  font-size: 50px;
+  color:white;
+  text-shadow: 0px 0px 3px #000, -1px -1px #000, 1px 1px #000;
+  background: transparent;
+
 }

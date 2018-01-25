@@ -1,11 +1,10 @@
 import React from 'react';
-import withAuth from '../hocs/withAuth';
 import { withRouter, } from 'react-router-dom'
 import { connect, } from 'react-redux';
 import * as actions from '../actions';
 
 class Profile extends React.Component {
-  constructor(){
+  constructor() {
     super()
 
     this.state = {
@@ -18,20 +17,17 @@ class Profile extends React.Component {
     };
   }
 
-  render(){
+  render() {
     const { currentGamer, } = this.props
     const highScore = currentGamer.profile && currentGamer.profile.high_score
 
     return(
-      <h1>
-        Hi {currentGamer.name} your ranking is {highScore}
+      <h1 className= "profile">
+        Hi {currentGamer.name}! Your highest score is currently {highScore}. Keep Training! 
       </h1>
     )
   }
 }
-
-
-//export default withAuth(Profile);
 
 const mapStateToProps = state => ({
   currentGamer: state.auth.currentGamer,

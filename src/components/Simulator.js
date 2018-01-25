@@ -1,41 +1,49 @@
 import React from "react"
-import { connect, } from 'react-redux';
-import { withRouter, } from 'react-router-dom';
-import * as actions from '../actions/index.js';
+import { connect, } from 'react-redux'
+import { withRouter, } from 'react-router-dom'
+import * as actions from '../actions/index.js'
 
 class Simulator extends React.Component {
-  constructor(){
+  constructor() {
     super()
-    this.state = {
-      input:"",
-      combos:[],
-      clicked: false,
-      currentRand:"",
-      currentMouseDown:"",
-      timeUp: false,
-      correct: 0,
-      highScore: 0,
-      gamers:[],
-      averageComboTimes: []
-    }
-  };
 
-  handleClick= () =>{
+    this.state = {
+      averageComboTimes: [],
+      clicked: false,
+      combos: [],
+      correct: 0,
+      currentMouseDown: "",
+      currentRand: "",
+      gamers: [],
+      highScore: 0,
+      input: "",
+      timeUp: false,
+    }
+  }
+
+  handleClick = () => {
     this.setState({
       clicked: !this.state.clicked,
-      highScore: this.props.currentGamer.profile.high_score
+      highScore: this.props.currentGamer.profile.high_score,
+      startTime: performance.now(),
     })
   }
 
   handleChange = (event) => {
     // check for corner cases here first!
-    if (event.key !== "Backspace"){
-    this.state.combos.push(event.key)
+    let newCombos, newInput
+
+    if (event.key !== 'Backspace' && event.key !== 'Enter') {
+      newCombos = this.state.combos.concat(event.key)
+      newInput = this.state.input.concat(event.key)
+    } else if (event.key === 'Backspace') {
+      newCombos = this.state.combos.pop()
+      newInput = this.state.input.slice(0, -1)
     }
-    const newInput = this.state.input
-    newInput.concat(event.key)
+
     this.setState({
-      input: newInput
+      input: newInput,
+      combos: newCombos,
     })
   }
 
@@ -44,31 +52,32 @@ class Simulator extends React.Component {
     const maxSize = this.state.combos.length
     const randomLength = Math.ceil(Math.random() * maxSize)
     const randomizedStringArr = []
+
     for (let charCount = 1; charCount <= randomLength; charCount++)
-      randomizedStringArr.push(this.state.combos[Math.floor(Math.random()*this.state.combos.length)])
+      randomizedStringArr.push(this.state.combos[Math.floor(Math.random() * this.state.combos.length)])
+
     // let random = this.state.combos[Math.floor(Math.random()*this.state.combos.length)]
     this.setState({
       currentRand: randomizedStringArr.join(''),
-      input:"",
+      input: '',
+      startTime: performance.now(),
     })
   }
 
   handleGamerMatchAttempt = (event) => {
+    if (this.state.currentRand === event.target.value) {
+      const totalTime = performance.now() - this.state.startTime
+      console.log("This combo took " + totalTime + " milliseconds.")
 
-    if (this.state.currentRand === event.target.value ) {
-      this.handleRand();
+      this.handleRand()
       this.setState({
-        currentMouseDown: "",
+        averageComboTimes: this.state.averageComboTimes.concat(totalTime / event.target.value.length),
+        currentMouseDown: '',
         correct: this.state.correct + 1
-      })
-      var t0 = performance.now();
-      this.handleRand();
-      var t1 = performance.now();
-      console.log("This combo took "+ (t1 - t0) + " milliseconds.");
-
-    } else if (event.target.value !== this.state.currentRand.substring(0,event.target.value.length)){
+      }, () => { console.log(this.state.averageComboTimes) })
+    } else if (event.target.value !== this.state.currentRand.substring(0, event.target.value.length)) {
       this.setState({
-        currentMouseDown:""
+        currentMouseDown: '',
       })
     } else {
       this.setState({
@@ -78,8 +87,7 @@ class Simulator extends React.Component {
   }
 
   newHighScore = () => {
-
-    if (this.state.correct > this.state.highScore){
+    if (this.state.correct > this.state.highScore) {
       this.setState({
         highScore: this.props.currentGamer.high_score
       })
@@ -92,49 +100,60 @@ class Simulator extends React.Component {
       document.getElementById("progressBar").value = 30 - --timeleft;
       if (timeleft <= 0) {
         clearInterval(downloadTimer);
+        const totalTime = this.state.averageComboTimes.reduce((accumulator, currentValue) => {
+          return accumulator + currentValue
+        }, 0)
 
         this.setState({
-          timeUp: true
+          timeUp: true,
+          averageTime: totalTime / this.state.averageComboTimes.length
         })
+
         if (this.state.correct > this.state.highScore) {
           this.setState({
-            highScore: this.state.correct
-          }, ()=> this.props.changeHighScore(this.state))
+            highScore: this.state.correct,
+          }, () => this.props.changeHighScore(this.state))
         }
       }
     }, 1000);
-
   }
 
   splitRand = () => {
-    let splitLetters = this.state.currentRand.split("")
-    return splitLetters.map((letter => {
-      return <span className="showrand">{letter}</span>
-    }))
+    let splitLetters = this.state.currentRand.split('')
+    return splitLetters.map((letter, index) => {
+      return <span className="showrand" key={letter + index}>{letter.toUpperCase()}</span>
+    })
   }
 
   render() {
     //let rand = <h1>{this.splitRand()}</h1>
-
     //let rand = <h1 className="showrand">{this.splitRand()}</h1>
-    let timeIsUpMessage = <h1>Time is Up! You got {this.state.correct} your high score is {this.state.highScore}</h1>
-    let newHighScoreMessage = <h1>New High Score! You got {this.state.correct} your high score is {this.state.highScore}</h1>
-    let start =
-    <div>
-      <div>
-        <input onKeyDown={this.handleChange} placeholder="Enter Hot Keys" type="text" />
-      </div>
-      <button onClick={(event) => { this.handleRand(); this.handleClick();}}>Start</button>
-      <button>Add Key</button><br/>
+    let timeIsUpMessage = <div className="time-is-up-message">
+      <h1>
+        Time is Up! You got {this.state.correct} and your high score is now {this.state.highScore}
+      </h1>
+      <div>Your average key press was {this.state.averageTime}ms</div>
     </div>
 
-    let timer = <div><progress
-      className="timer"
-      value="0"
-      max="30"
-      id="progressBar"
-    >
-    </progress>
+    let newHighScoreMessage = <h1>
+      New High Score! You got {this.state.correct} your high score is {this.state.highScore}
+    </h1>
+
+    let start = <div>
+      <div>
+        <input className="enter-hot-keys" onKeyDown={this.handleChange} placeholder="Enter Hot Keys" type="text" />
+      </div>
+      <button className="start-sim" onClick={(event) => { this.handleRand(); this.handleClick(); }}>Start</button>
+    </div>
+
+    let timer = <div>
+      <progress
+        className="timer"
+        value="0"
+        max="30"
+        id="progressBar"
+      >
+      </progress>
     </div>
 
     let matchInput = <div className="match">
@@ -160,6 +179,5 @@ const mapStateToProps = state => ({
   currentGamer: state.auth.currentGamer,
   loggedIn: !!state.auth.currentGamer.id
 });
-
 
 export default withRouter(connect(mapStateToProps, actions)(Simulator));
